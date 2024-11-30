@@ -1,0 +1,5 @@
+username,password,role
+Buyer,buyer,buyer
+Seller,seller,seller
+Agent,agent,agent
+Admin,admin,admin
