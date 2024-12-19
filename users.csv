@@ -1,5 +1,6 @@
-username,password,role
-Buyer,buyer,buyer
-Seller,seller,seller
-Agent,agent,agent
+username,password,role,u@gmail.com
+Buyer,buyer,buyer,b@gmail.com
+Seller,seller,seller,s@gmail.com
+Agent,agent,agent,a@gmail.com
 Admin,admin,admin
+

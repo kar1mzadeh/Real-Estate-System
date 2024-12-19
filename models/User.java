@@ -3,7 +3,17 @@ package models;
 public abstract class User {
     protected String username;
     protected String role;
+    protected String email;
     
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 
     public User(String username, String role) {
         this.username = username;
@@ -31,5 +41,5 @@ public abstract class User {
     }
 
 
-    public abstract void displayMenu();
+    public abstract void showMenu();
 }

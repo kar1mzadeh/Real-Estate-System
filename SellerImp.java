@@ -1,12 +1,7 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
+import models.Property;
 import models.User;
 public class SellerImp 
 
@@ -18,8 +13,8 @@ public void createProperty(User user)
 {
     Scanner scanner = new Scanner(System.in);
     
-  System.out.print("Enter property title: ");
-    String title = scanner.nextLine();
+    System.out.print("Enter property title: ");
+    String type = scanner.nextLine();
     System.out.print("Enter property description: ");
     String description = scanner.nextLine();
     System.out.print("Enter property price: ");
@@ -29,10 +24,11 @@ public void createProperty(User user)
 
     int propertyId = getNextPropertyId(); // Generate unique ID
 
-    Property property = new Property(propertyId, title, description, price, location, user.getUsername());
+    Property property = new Property(propertyId, type, description, price, location, user.getUsername());
 
     savePropertyToFile(property);
     System.out.println("Property added successfully!");
+    scanner.close();
 }
 private static int getNextPropertyId() {
     int lastId = 0;
@@ -40,7 +36,7 @@ private static int getNextPropertyId() {
         String line;
         while ((line = br.readLine()) != null) {
             String[] propertyData = line.split(",");
-            lastId = Integer.parseInt(propertyData[0]);  // Assumes ID is in column 0
+            lastId = Integer.parseInt(propertyData[0]); 
         }
     } catch (IOException e) {
         System.err.println("Error reading property IDs: " + e.getMessage());
@@ -56,9 +52,7 @@ private static void savePropertyToFile(Property property) {
         System.err.println("Error saving property: " + e.getMessage());
     }
     
-    
 }
-
 
 public void editProperty(String username) {
     displayUserProperties(username);
@@ -99,6 +93,7 @@ public void editProperty(String username) {
             // Add the (possibly updated) property to the list
             allProperties.add(String.join(",", propertyData));
         }
+        scanner.close();
     } catch (IOException e) {
         System.out.println("Error reading properties: " + e.getMessage());
     }
@@ -110,9 +105,6 @@ public void editProperty(String username) {
         System.out.println("Property not found or does not belong to you.");
     }
 }
-
-
-
 
 private void saveUpdatedPropertyToFile(List<String> properties) {
     try (BufferedWriter bw = new BufferedWriter(new FileWriter("properties.csv"))) {
@@ -135,7 +127,7 @@ private static void displayUserProperties(String username) {
 
         while ((line = br.readLine()) != null) {
             String[] propertyData = line.split(",");
-            // Assuming the 6th field (index 5) in CSV stores the owner's username
+            
             if (propertyData[5].equals(username)) {
                 hasProperties = true;
                 System.out.println("Property ID: " + propertyData[0]);
