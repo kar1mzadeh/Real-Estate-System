@@ -1,4 +1,4 @@
-
+package models;
 
 public class Property {
 
@@ -8,10 +8,11 @@ public class Property {
     private double price;
     private String location;
     private String ownerUsername;
+    private String type;
 
-    public Property(int propertyId, String title, String description, double price, String location, String ownerUsername) {
+    public Property(int propertyId, String type, String location, double price, String description, String ownerUsername) {
         this.propertyId = propertyId;
-        this.title = title;
+        this.type = type;
         this.description = description;
         this.price = price;
         this.location = location;
@@ -22,16 +23,16 @@ public class Property {
         return propertyId;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public void setPropertyId(int propertyId) {
         this.propertyId = propertyId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getDescription() {

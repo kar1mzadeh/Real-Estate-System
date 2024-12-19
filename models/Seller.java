@@ -1,12 +1,13 @@
 package models;
 
 public class Seller extends User {
+
     public Seller(String username, String role) {
-        super(username, role);
+        super(username, "seller");
     }
 
     @Override
-    public void displayMenu() {
+    public void showMenu() {
         System.out.println("\n===== Seller Menu =====");
         System.out.println("1. Create Property");
         System.out.println("2. Edit Property");
@@ -15,3 +16,4 @@ public class Seller extends User {
         System.out.println("5. Logout");
     }
 }
+
