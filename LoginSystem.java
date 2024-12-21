@@ -5,34 +5,7 @@ import models.User;
 public class LoginSystem {
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        while (true) {
-            System.out.println("===========================================");
-            System.out.println("Welcome to PARALLAX Real Estate Application");
-            System.out.println("===========================================");
-            System.out.println("1. Login");
-            System.out.println("2. Register");
-            System.out.println("3. Exit");
-            System.out.print("Choose an option: ");
-            String option = scanner.nextLine();
-
-            switch (option) {
-                case "1":
-                    login();
-                    break;
-                case "2":
-                    register();
-                    break;
-                case "3":
-                    System.out.println("Exiting... Thank you!");
-                    System.exit(0);
-                default:
-                    System.out.println("Invalid option. Please try again.");
-            }
-        }
-    }
-
-    private static void login() {
+    public static void login() {
         System.out.print("Enter username: ");
         String username = scanner.nextLine();
         System.out.print("Enter password: ");
@@ -48,7 +21,7 @@ public class LoginSystem {
         }
     }
 
-    private static void register() {
+    public static void register() {
         System.out.print("Enter a new username: ");
         String username = scanner.nextLine();
         System.out.print("Enter a password: ");
@@ -78,5 +51,7 @@ public class LoginSystem {
     private static boolean isValidEmail(String email) {
         return email != null && email.contains("@") && email.contains(".");
     }
+
+   
     
 }

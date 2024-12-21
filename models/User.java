@@ -6,6 +6,7 @@ public abstract class User {
     protected String email;
     
 
+
     public String getEmail() {
         return email;
     }
@@ -20,6 +21,10 @@ public abstract class User {
         this.role = role;
     }
     
+    public User ()
+    {
+        
+    }
 
     public String getUsername() {
         return username;

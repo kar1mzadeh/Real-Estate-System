@@ -64,9 +64,12 @@ public class Buyer extends User {
             
                         if (propertyId.contains(searchQuery) || suburb.contains(searchQuery)) {
                             propertyDetails.add(property); // Add matching property to the list
-                            System.out.println("Property ID: " + property[0] + ", Suburb: " + property[4] +
-                                               ", Price: " + property[3] + ", Seller: " + property[5]);
-                            found = true;
+                            if(property[5].equals("0")){       // it checks if it is archived or not
+                                System.out.println("Property ID: " + property[0] + ", Suburb: " + property[4] +
+                                ", Price: " + property[3] + ", Owner: " + property[6]);
+             found = true;
+                            }
+
                         }
                     }
             
@@ -98,7 +101,7 @@ public class Buyer extends User {
                 System.out.println("Description: " + propertyDetails[2]);
                 System.out.println("Price: $" + propertyDetails[3]);
                 System.out.println("Location: " + propertyDetails[4]);
-                System.out.println("Owner: " + propertyDetails[5]);
+                System.out.println("Owner: " + propertyDetails[6]);
                 System.out.println("--------------------------------------------");
 
 
