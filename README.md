@@ -10,14 +10,14 @@ Skeleton/template code for students of CSCI3509 to develop on.
    - Once the app starts, you will see a menu with options:  
      - **Login**: 
      - **Register**:  
-     - **Forgot Password**: 
+     - **Forgot Password**: User can click forgot password. If Email & username is correctly mentioned, the message goes to admin to check and accept the with, if he/she wants.
      - **Exit**: 
 
 3. **User Roles**  
    - After logging in, your role will determine the available actions:  
      - **Buyer**: Search properties, contact sellers, make payments.  
      - **Agent**: Manage requests and assist buyers.  
-     - **Admin**: View accounts and handle password requests.  
+     - **Admin**: View accounts and handle password requests. If any user requested password view, admin can choose to or not accept anyone's wish, and if so, user can see it if click "forgot password" again.
      - **Seller**: Manage listed properties.  
 
 4. **Data Storage**  
