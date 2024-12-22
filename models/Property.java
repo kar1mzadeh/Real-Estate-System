@@ -3,25 +3,40 @@ package models;
 public class Property {
 
     private int propertyId;
-    private String title;
+    private String type;
     private String description;
     private double price;
     private String location;
     private String ownerUsername;
-    private String type;
 
-    public Property(int propertyId, String type, String location, double price, String description, String ownerUsername) {
+
+    private String archivedStatus;
+    
+
+    public Property(int propertyId, String type, String description, double price, String location, String ownerUsername, String archivedStatus) {
         this.propertyId = propertyId;
         this.type = type;
         this.description = description;
         this.price = price;
         this.location = location;
         this.ownerUsername=ownerUsername;
+        this.archivedStatus=archivedStatus;
     }
+
+    public Property()
+    {
+        
+    }
+
 
     public int getPropertyId() {
         return propertyId;
     }
+
+    public void setPropertyId(int propertyId) {
+        this.propertyId = propertyId;
+    }
+
 
     public String getType() {
         return type;
@@ -29,10 +44,6 @@ public class Property {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public void setPropertyId(int propertyId) {
-        this.propertyId = propertyId;
     }
 
     public String getDescription() {
@@ -66,8 +77,24 @@ public class Property {
     public void setOwnerUsername(String ownerUsername) {
         this.ownerUsername = ownerUsername;
     }
+   
+
+
+
+
+    public String getArchivedStatus() {
+        return archivedStatus;
+    }
+
+
+
+
+    public void setArchivedStatus(String archivedStatus) {
+        this.archivedStatus = archivedStatus;
+    }
+
     public String toCSV() {
-        return propertyId + "," + title + "," + description + "," + price + "," + location + "," + ownerUsername;
+        return propertyId + "," + type + "," + description + "," + price + "," + location + "," +  ownerUsername + "," + archivedStatus ;
     }
     
 }

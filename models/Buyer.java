@@ -51,7 +51,7 @@ public class Buyer extends User {
 
                 System.out.print("Enter suburb name or property ID: ");
                 String searchQuery = scanner.nextLine().toLowerCase();
-            
+        
                 try (BufferedReader br = new BufferedReader(new FileReader(PROPERTIES_FILE))) {
                     String line;
                     boolean found = false;
@@ -64,9 +64,13 @@ public class Buyer extends User {
             
                         if (propertyId.contains(searchQuery) || suburb.contains(searchQuery)) {
                             propertyDetails.add(property); // Add matching property to the list
-                            System.out.println("Property ID: " + property[0] + ", Suburb: " + property[4] +
-                                               ", Price: " + property[3] + ", Seller: " + property[5]);
-                            found = true;
+
+                            if(property[5].equals("0")){       // it checks if it is archived or not
+                                System.out.println("Property ID: " + property[0] + ", Suburb: " + property[4] +
+                                ", Price: " + property[3] + ", Owner: " + property[6]);
+             found = true;
+                            }
+
                         }
                     }
             
@@ -76,6 +80,7 @@ public class Buyer extends User {
                         // Ask the user for the property they are interested in
                         System.out.print("\nWhich property are you interested in? Enter Property ID: ");
                         String selectedId = scanner.nextLine();
+
                         // Display detailed information for the selected property
                         displayPropertyDetails(selectedId, propertyDetails);
                     }
@@ -99,6 +104,7 @@ public class Buyer extends User {
                 System.out.println("Price: $" + propertyDetails[3]);
                 System.out.println("Location: " + propertyDetails[4]);
                 System.out.println("Owner: " + propertyDetails[5]);
+
                 System.out.println("--------------------------------------------");
 
 
@@ -113,7 +119,7 @@ public class Buyer extends User {
         // Ask the buyer if they are interested in negotiating a contract
         System.out.print("Do you want to contact the seller/agent to negotiate a contract? (yes/no): ");
         String contactDecision = scanner.nextLine().toLowerCase();
-    
+ 
         if (contactDecision.equals("yes")) {
             try {
                 // Retrieve the seller's username for the selected property
@@ -181,5 +187,4 @@ public class Buyer extends User {
     public void makePayment() {
         
     }
-    
 }
