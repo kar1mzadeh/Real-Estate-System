@@ -107,10 +107,6 @@ private static String getPasswordFromUsersFile(String username) {
         while ((line = reader.readLine()) != null) {
             String[] userDetails = line.split(",");
 
-            for (String string : userDetails) {
-                System.out.println(string);
-            }
-
             if (userDetails.length >= 2 && userDetails[0].equals(username)) {
                 return userDetails[1];
             }
