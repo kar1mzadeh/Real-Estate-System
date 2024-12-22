@@ -25,7 +25,7 @@ public class Seller extends User {
         System.out.println("3. Archive Property");
         System.out.println("4. Sign Contract");
         System.out.println("5. Logout");
-        String option = scanner.nextLine();
+        String option = scanner.next();
 
 
         switch (option) {
@@ -52,5 +52,3 @@ SellerImp.archiveProperty(getUsername());
 
    
 }
-
-
