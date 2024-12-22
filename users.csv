@@ -2,10 +2,6 @@ username,password,role,u@gmail.com
 Buyer,buyer,buyer,b@gmail.com
 Seller,seller,seller,s@gmail.com
 Agent,agent,agent,a@gmail.com
-<<<<<<< HEAD
-Admin,admin,admin
-
-=======
 Admin,Admin,admin,a@admin.com
 Rahman,rahman123,seller,r@gmail.com
 >>>>>>> cb5718516413acd44e267106518685e3ad4b48fc

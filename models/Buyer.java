@@ -8,12 +8,12 @@ public class Buyer extends User {
     private static final String PROPERTIES_FILE = "properties.csv"; // property details are stored
     private static final String USERS_FILE = "users.csv"; // user details are stored
     private static final String CONTRACTS_FILE = "contracts.csv"; // contracts details are stored
-    private static List<String[]> contracts = new ArrayList<>(); // to store contract details
+    private static List<String[]> contracts = new ArrayList<>(); 
     private static List<String[]> propertyDetails = new ArrayList<>();
 
 
-    private String selectedPropertyId = ""; // Store the selected property ID for the buyer
-    private boolean contractAccepted = false; // Flag to check if the contract has been accepted
+    private String selectedPropertyId = ""; 
+    private boolean contractAccepted = false; 
     
     public Buyer(String username) {
         super(username, "buyer");
@@ -35,7 +35,7 @@ public class Buyer extends User {
                     searchProperties();
                     break;
                 case "2":
-                    contactSellerAgent(); // called after property selection
+                    contactSellerAgent(); 
                     break;
                 case "3":
                     makePayment();
@@ -51,7 +51,7 @@ public class Buyer extends User {
 
     // Search properties by suburb or property ID
             public void searchProperties() {
-                propertyDetails.clear(); // Clear any previous property details
+                propertyDetails.clear(); // clear any previous property details
                 System.out.println("\n============ Search Properties ============");
 
                 System.out.print("Enter suburb name or property ID: ");
@@ -61,41 +61,35 @@ public class Buyer extends User {
                     String line;
                     boolean found = false;
             
-                    // Search properties based on suburb or property ID
                     while ((line = br.readLine()) != null) {
                         String[] property = line.split(",");
-                        String propertyId = property[0].toLowerCase();
-                        String suburb = property[4].toLowerCase(); // Assuming suburb is at index 4
-            
-                        if (propertyId.contains(searchQuery) || suburb.contains(searchQuery)) {
-                            propertyDetails.add(property); // Add matching property to the list
-                            if(property[5].equals("0")){       // it checks if it is archived or not
-                                System.out.println("Property ID: " + property[0] + ", Suburb: " + property[4] +
-                                ", Price: " + property[3] + ", Owner: " + property[6]);
-                                found = true;
-                            }
+                        String propertyId = property[0].trim();  
+                        String suburb = property[4].trim().toLowerCase(); 
 
+                    // compare if the property ID or suburb contains the search query
+                        if (propertyId.toLowerCase().contains(searchQuery) || suburb.contains(searchQuery)) {
+                            propertyDetails.add(property); 
+                        if (property[5].equals("0")) { // check if the property is not archived
+                            System.out.println("Property ID: " + property[0] + ", Suburb: " + property[4] +
+                                ", Price: " + property[3] + ", Owner: " + property[6]);
+                            found = true;
                         }
                     }
+                }
             
                     if (!found) {
                         System.out.println("No properties found matching your search.");
                     } else {
-                        // Ask the user for the property they are interested in
                         System.out.print("\nWhich property are you interested in? Enter Property ID: ");
                         String selectedId = scanner.nextLine();
-                        // Display detailed information for the selected property
                         displayPropertyDetails(selectedId, propertyDetails);
                     }
                 } catch (IOException e) {
                     System.err.println("Error reading properties file: " + e.getMessage());
                 }
             }
-            
 
-            
-
-    // Display the detailed information of a selected property
+    // display the detailed information of a selected property
     public void displayPropertyDetails(String selectedId, List<String[]> searchResults) {
         for (String[] propertyDetails : searchResults) {
             if (propertyDetails[0].equals(selectedId)) {
@@ -110,33 +104,30 @@ public class Buyer extends User {
                 System.out.println("--------------------------------------------");
 
 
-                // After displaying the property details, ask the buyer if they want to contact the seller/agent
+                // ask the buyer if they want to contact the seller/agent
                 contactSellerAgent();
-                // break;
                 return;
             }
         }
     }
 
+    //contract negotiation
     public void contactSellerAgent() {
-        // Ask the buyer if they are interested in negotiating a contract
+        // ask the buyer if they are interested in negotiating a contract
         System.out.print("Do you want to contact the seller/agent to negotiate a contract? (yes/no): ");
         String contactDecision = scanner.nextLine().toLowerCase();
 
         if (!contactDecision.equals("yes")) {
             System.out.println("Returning to the main menu.");
-            return; // Exit this method and continue in the menu loop
+            return; // exit this method and continue in the menu loop
         }
         
-        // Retrieve the seller's email for the selected property
         String sellerEmail = getSellerEmail();
         if (sellerEmail == null) {
             System.out.println("Seller's email not found. Please try again.");
 
         }
         
-        
-        // Successfully contact the seller
         System.out.println("Successfully contacted the seller/agent! Negotiation request sent.");
         System.out.println("The seller/agent will review your request and respond soon.");
     
@@ -144,9 +135,9 @@ public class Buyer extends User {
         logNegotiationRequest();
     }
     
-    // Method to get the seller's email based on the selected property
+    // to get the seller's email based on the selected property
     private String getSellerEmail() {
-        String sellerUsername = propertyDetails.get(0)[6]; // Assuming the seller's username is in the 7th column
+        String sellerUsername = propertyDetails.get(0)[6];
         String sellerEmail = null;
     
         try (BufferedReader br = new BufferedReader(new FileReader(USERS_FILE))) {
@@ -154,7 +145,7 @@ public class Buyer extends User {
             while ((line = br.readLine()) != null) {
                 String[] userDetails = line.split(",");
                 if (userDetails[0].equals(sellerUsername)) {
-                    sellerEmail = userDetails[3]; // Assuming the email is at index 3
+                    sellerEmail = userDetails[3]; 
                     break;
                 }
             }
@@ -165,14 +156,13 @@ public class Buyer extends User {
         return sellerEmail;
     }
     
-    // Method to log the negotiation request to the requests.csv file
+    // to log the negotiation request to the requests.csv file
     private void logNegotiationRequest() {
         try (BufferedReader reader = new BufferedReader(new FileReader("requests.csv"));
              BufferedWriter writer = new BufferedWriter(new FileWriter("requests.csv", true))) {
             
-            int requestId = 1; // Default to 1 if no requests exist
+            int requestId = 1; 
             
-            // Determine the last request ID from the file
             String lastLine = null;
             String line;
             while ((line = reader.readLine()) != null) {
@@ -181,31 +171,29 @@ public class Buyer extends User {
             
             if (lastLine != null) {
                 String[] lastRequestDetails = lastLine.split(",");
-                requestId = Integer.parseInt(lastRequestDetails[0]) + 1; // Increment the last ID
+                requestId = Integer.parseInt(lastRequestDetails[0]) + 1; 
             }
             
-            // Write the new request to the file
-            String propertyId = propertyDetails.get(0)[0]; // Get property ID
+            // write the new request to the file
+            String propertyId = propertyDetails.get(0)[0]; 
             writer.write(requestId + "," + getUsername() + "," + propertyId );
             writer.newLine();
         } catch (IOException e) {
             System.err.println("Error handling requests file: " + e.getMessage());
         }
     }
-    
-    
 
-    // Check if the selected property has an accepted contract
+    // check if the selected property has an accepted contract
     public void checkContractStatus(String selectedId) {
-        contracts.clear(); // Clear previous contract data
+        contracts.clear(); 
 
         try (BufferedReader br = new BufferedReader(new FileReader(CONTRACTS_FILE))) {
             String line;
             
             while ((line = br.readLine()) != null) {
                 String[] contract = line.split(",");
-                String contractId = contract[0]; // Assuming property ID is at index 0
-                String status = contract[8]; // Assuming contract status is at index 8
+                String contractId = contract[0];
+                String status = contract[8]; 
                 
                 if (contractId.equals(selectedId) && status.equals("accepted")) {
                     contractAccepted = true;
@@ -218,38 +206,41 @@ public class Buyer extends User {
     }
 
     public void makePayment() {
-        contracts.clear(); // Clear any previous contract details
+        contracts.clear(); 
         System.out.println("\n============ Make Payment ============");
     
         try (BufferedReader br = new BufferedReader(new FileReader(CONTRACTS_FILE))) {
             String line;
             boolean foundAcceptedContract = false;
     
-            // Load contracts from the file
+            // load contracts from the file
             while ((line = br.readLine()) != null) {
                 String[] contract = line.split(",");
                 contracts.add(contract);
     
-                // Check if the contract status is "accepted" and matches the selected property ID
-                if (contract[0].trim().equals(selectedPropertyId) && contract[8].trim().equalsIgnoreCase("accepted")) {
+                // check if the contract status is "accepted"
+                if (contract[8].trim().equalsIgnoreCase("accepted")) {
                     foundAcceptedContract = true;
     
-                    // Display the contract details
-                    System.out.println("Property ID: " + contract[0]);
+                    // display the contract details
+                    System.out.println("Contract ID: " + contract[0]);
                     System.out.println("Type: " + contract[1]);
                     System.out.println("Description: " + contract[2]);
-                    System.out.println("Price: " + contract[4]);
+                    System.out.println("Price: " + contract[3]);
+                    System.out.println("Location: " + contract[4]);
+                    System.out.println("Seller: " + contract[5]);
+                    System.out.println("Buyer: " + contract[6]);
                     System.out.println("Status: " + contract[8]);
                     System.out.println("--------------------------------------");
     
-                    // Prompt to proceed with payment
+                    // prompt to proceed with payment
                     System.out.print("Would you like to proceed with payment? (yes/no): ");
                     String decision = scanner.nextLine().toLowerCase();
     
                     if (decision.equals("yes")) {
-                        double propertyPrice = Double.parseDouble(contract[4]);
+                        double propertyPrice = Double.parseDouble(contract[3]);
     
-                        // Ask for installment months
+                        // ask for installment months
                         System.out.print("Enter the number of installment months: ");
                         int installmentMonths;
                         while (true) {
@@ -264,7 +255,9 @@ public class Buyer extends User {
                             }
                         }
     
-                        processPayment(propertyPrice, installmentMonths); // Pass installment details to the payment method
+                        processPayment(propertyPrice, installmentMonths); // pass installment details to the payment method
+                        updateContractStatusToBought(contract[8]);
+                        return;
                     } else {
                         System.out.println("Payment cancelled.");
                     }
@@ -282,26 +275,50 @@ public class Buyer extends User {
     private void processPayment(double propertyPrice, int installmentMonths) {
         System.out.println("\n============ Payment Process ============");
     
-        // Calculate initial deposit (10% of the property price)
+        // initial deposit (10% of the property price)
         double initialDeposit = propertyPrice * 0.10;
         double remainingAmount = propertyPrice - initialDeposit;
     
         System.out.println("Initial Deposit (10%): $" + initialDeposit);
         System.out.println("Remaining Amount: $" + remainingAmount);
     
-        // Calculate monthly installment
+        // calculate monthly installment
         double monthlyInstallment = remainingAmount / installmentMonths;
         System.out.println("Monthly Installment: $" + monthlyInstallment);
     
-        // Confirm payment
+        // confirm payment
         System.out.print("Confirm payment? (yes/no): ");
         String confirm = scanner.nextLine().toLowerCase();
     
         if (confirm.equals("yes")) {
             System.out.println("Payment confirmed. Thank you for securing the property!");
-            // Update the contract file or database as needed
+            // update the contract file
         } else {
             System.out.println("Payment process cancelled.");
+        }
+    }
+    private void updateContractStatusToBought(String contractId) {
+        // temporary list to hold updated contract information
+        List<String[]> updatedContracts = new ArrayList<>();
+    
+        // loop through existing contracts and update the status of the selected contract
+        for (String[] contract : contracts) {
+            if (contract[0].equals(contractId)) {
+                // Update the status to "bought"
+                contract[8] = "bought";
+            }
+            updatedContracts.add(contract);
+        }
+    
+        // write the updated contracts back to the file
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CONTRACTS_FILE))) {
+            for (String[] contract : updatedContracts) {
+                bw.write(String.join(",", contract));
+                bw.newLine();
+            }
+            System.out.println("Contract status updated to 'bought'.");
+        } catch (IOException e) {
+            System.out.println("Error updating contracts file: " + e.getMessage());
         }
     }
 }

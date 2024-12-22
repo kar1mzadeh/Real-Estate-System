@@ -273,7 +273,7 @@ public class SellerImp {
     
         if (decision.equals("yes")) {
             contractDetails[8] = "accepted"; // Update status to signed
-            System.out.println("Contract signed. Sent to agent for confirmation.");
+            System.out.println("Contract signed.");
         } else {
             System.out.println("Contract not signed.");
         }

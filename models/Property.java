@@ -8,11 +8,8 @@ public class Property {
     private double price;
     private String location;
     private String ownerUsername;
-
-
     private String archivedStatus;
     
-
     public Property(int propertyId, String type, String description, double price, String location, String ownerUsername, String archivedStatus) {
         this.propertyId = propertyId;
         this.type = type;
@@ -27,7 +24,6 @@ public class Property {
     {
         
     }
-
 
     public int getPropertyId() {
         return propertyId;
@@ -77,17 +73,10 @@ public class Property {
     public void setOwnerUsername(String ownerUsername) {
         this.ownerUsername = ownerUsername;
     }
-   
-
-
-
 
     public String getArchivedStatus() {
         return archivedStatus;
     }
-
-
-
 
     public void setArchivedStatus(String archivedStatus) {
         this.archivedStatus = archivedStatus;

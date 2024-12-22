@@ -18,7 +18,6 @@ public class Agent extends User {
             System.out.println("\n============== Agent Menu =================");
 
             System.out.println("1. View Requests");
-            // System.out.println("2. Create Contract");
             System.out.println("2. Logout");
             System.out.print("Choose an option: ");
             String option = scanner.nextLine();
@@ -27,9 +26,7 @@ public class Agent extends User {
                 case "1":
                     manageContracts();
                     break;
-                // case "2":
-                //     createContract(); // Optional direct entry to contract creation
-                //     break;
+               
                 case "2":
                     System.out.println("Logging out...");
                     return;
@@ -44,26 +41,20 @@ public class Agent extends User {
 
         try (BufferedReader br = new BufferedReader(new FileReader("requests.csv"))) {
             String line;
-            // boolean hasRequests = false;
             List<String[]> requests = new ArrayList<>();
             int requestCount = 1;
 
             while ((line = br.readLine()) != null) {
                 String[] requestDetails = line.split(",");
                 requests.add(requestDetails);
-                // System.out.println( + ". Request ID: " + requestDetails[0]);
                 System.out.println(requestCount + "  Buyer: " + requestDetails[1]);
                 System.out.println("  Property ID: " + requestDetails[2]);
                 System.out.println("-------------------------------------------");
 
-                // hasRequests = true;
                 requestCount++;
             }
 
-            // if (!hasRequests) {
-            //     System.out.println("No requests found.");
-            //     return;
-            // }
+        
             if (requests.isEmpty()) {
                 System.out.println("No requests found.");
                 return;
@@ -98,10 +89,8 @@ public class Agent extends User {
             System.out.println("Request accepted. Proceeding to create a contract...");
             createContract(requestDetails);
         
-            // Remove the accepted request from the list
             requests.remove(index);
 
-            // Update the requests.csv file
             updateRequestsFile(requests);
         } else {
             System.out.println("Request declined. Returning to menu.");
@@ -132,7 +121,7 @@ public class Agent extends User {
             return;
         }
     
-        // Display property details
+        // display property details
         System.out.println("Property ID: " + propertyDetails[0]);
         System.out.println("Type: " + propertyDetails[1]); // Apartment, Villa, Townhouse
         System.out.println("Description: " + propertyDetails[2]);
@@ -142,26 +131,21 @@ public class Agent extends User {
         System.out.println("Buyer: " + buyerUsername);
 
 
-        int contractId = generateContractId(); // Generate a unique contract ID
-        String contractStatus = "pending"; // Initial status is pending
+        int contractId = generateContractId(); // generate a unique contract ID
+        String contractStatus = "pending"; // initial status is pending
 
 
-        // Get the current date and time
+        // get the current date and time
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String currentDateTime = LocalDateTime.now().format(formatter);
 
-        // Display and collect contract details
+        // display and collect contract details
         System.out.println("Date and Time: " + currentDateTime);
-
-        // System.out.print("Sign (enter \"sign\"): ");
-        // String contractDetails = scanner.nextLine();
 
         String contractRecord = contractId + ","+ propertyDetails[1] + ","+  propertyDetails[2] + ","+ propertyDetails[3] + ","+ propertyDetails[4] + ","+  propertyDetails[6] + ","+ buyerUsername + "," + propertyId + "," + contractStatus + "\n";
 
-
-        // Save contract to a file
+        // save contract to a file
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("contracts.csv", true))) {
-            // String contractId = UUID.randomUUID().toString();
             bw.write(contractRecord);
             System.out.println("Contract created successfully and sent to seller and buyer for sign!");
         } catch (IOException e) {
@@ -169,22 +153,22 @@ public class Agent extends User {
         }
     }
 
-    // Method to generate a unique contract ID starting from 1
+    // method to generate a unique contract ID 
 private static int generateContractId() {
-    int lastContractId = 0; // Default value if no contracts exist
+    int lastContractId = 0; 
 
     try (BufferedReader br = new BufferedReader(new FileReader("contracts.csv"))) {
         String line;
         while ((line = br.readLine()) != null) {
             String[] contractData = line.split(",");
-            int currentId = Integer.parseInt(contractData[0]); // Assuming the first column is the contract ID
-            lastContractId = Math.max(lastContractId, currentId); // Get the highest ID
+            int currentId = Integer.parseInt(contractData[0]); // the first column is the contract ID
+            lastContractId = Math.max(lastContractId, currentId); //get the highest ID
         }
     } catch (IOException e) {
         System.err.println("Error reading contracts file: " + e.getMessage());
     }
 
-    return lastContractId + 1; // Increment the last contract ID by 1
+    return lastContractId + 1; // increment the last contract ID by 1
 }
 
     private static String[] getPropertyDetailsById(String propertyId) {
@@ -192,14 +176,14 @@ private static int generateContractId() {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] propertyDetails = line.split(",");
-                if (propertyDetails[0].equals(propertyId)) { // Match Property ID
+                if (propertyDetails[0].equals(propertyId)) { // match property ID
                     return propertyDetails;
                 }
             }
         } catch (IOException e) {
             System.err.println("Error reading properties file: " + e.getMessage());
         }
-        return null; // Return null if not found
+        return null; 
     }
     
 }

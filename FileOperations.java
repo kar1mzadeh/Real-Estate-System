@@ -87,5 +87,20 @@ public class FileOperations {
         }
         return new String(passwordArray);
     }
+
+    public static boolean isUserValid(String username, String email) {
+        try (BufferedReader br = new BufferedReader(new FileReader(CSV_FILE))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] userData = line.split(",");
+                if (userData.length == 4 && userData[0].equals(username) && userData[3].equals(email)) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error validating user: " + e.getMessage());
+        }
+        return false;
+    }
     
 }

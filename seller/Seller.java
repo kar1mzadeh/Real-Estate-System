@@ -18,7 +18,10 @@ public class Seller extends User {
     @Override
     public void showMenu() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("\n===== Seller Menu =====");
+
+        boolean isLoggedIn = true;
+        while (isLoggedIn) {
+            System.out.println("\n===== Seller Menu =====");
         System.out.println("1. Create Property");
         System.out.println("2. Edit Property");
         System.out.println("3. Archive Property");
@@ -47,9 +50,9 @@ public class Seller extends User {
             default:
                 System.out.println("Invalid option. Please try again.");
         }
+        }
+        
     }
 
    
 }
-
-
