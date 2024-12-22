@@ -1,7 +1,4 @@
 # Design Rationale  
-
-The design decisions for the `Buyer` and `Agent` classes in the real estate application are in object-oriented principles and design patterns.  
-
 ### Inheritance
 
 Inheritance is used to create the `Buyer` and `Agent` classes as specific forms of the `User` class. This decision aligns with the **Open/Closed Principle (OCP)**, which states that a system should be open to extension but closed to modification. By defining shared attributes and methods in the `User` class, we avoid code duplication and provide a consistent framework for user roles.  
