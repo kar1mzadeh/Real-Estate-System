@@ -23,7 +23,7 @@ public class Buyer extends User {
             System.out.println("3. Make Payment");
             System.out.println("4. Logout");
             System.out.print("Choose an option: ");
-            String option = scanner.nextLine();
+            String option = scanner.next();
 
             switch (option) {
                 case "1":
@@ -50,7 +50,7 @@ public class Buyer extends User {
                 System.out.println("\n============ Search Properties ============");
 
                 System.out.print("Enter suburb name or property ID: ");
-                String searchQuery = scanner.nextLine().toLowerCase();
+                String searchQuery = scanner.next().toLowerCase();
             
                 try (BufferedReader br = new BufferedReader(new FileReader(PROPERTIES_FILE))) {
                     String line;
@@ -78,7 +78,7 @@ public class Buyer extends User {
                     } else {
                         // Ask the user for the property they are interested in
                         System.out.print("\nWhich property are you interested in? Enter Property ID: ");
-                        String selectedId = scanner.nextLine();
+                        String selectedId = scanner.next();
                         // Display detailed information for the selected property
                         displayPropertyDetails(selectedId, propertyDetails);
                     }
@@ -115,7 +115,7 @@ public class Buyer extends User {
     public void contactSellerAgent() {
         // Ask the buyer if they are interested in negotiating a contract
         System.out.print("Do you want to contact the seller/agent to negotiate a contract? (yes/no): ");
-        String contactDecision = scanner.nextLine().toLowerCase();
+        String contactDecision = scanner.next().toLowerCase();
     
         if (contactDecision.equals("yes")) {
             try {
