@@ -1,11 +1,12 @@
+package operations;
 import java.io.*;
 import java.util.*;
 
 import models.Admin;
 import models.Agent;
 import models.Buyer;
+import models.Seller;
 import models.User;
-import seller.Seller;
 
 public class FileOperations {
 

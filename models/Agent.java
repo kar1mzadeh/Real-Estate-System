@@ -75,27 +75,32 @@ public class Agent extends User {
 
     private static void respondToRequest(List<String[]> requests, int index) {
         String[] requestDetails = requests.get(index);
-
+    
+        if (requestDetails.length < 3) { // Updated to reflect the new column count
+            System.err.println("Error: Malformed request. Missing required fields.");
+            return;
+        }
+    
         System.out.println("\nSelected Request:");
         System.out.println("Request ID: " + requestDetails[0]);
         System.out.println("Buyer: " + requestDetails[1]);
         System.out.println("Property ID: " + requestDetails[2]);
-        System.out.println("Number of installment months: " + requestDetails[3]);
-
+    
         System.out.print("\nDo you want to accept this request and send to seller for confirmation? (yes/no): ");
         String decision = scanner.nextLine().toLowerCase();
-
+    
         if (decision.equals("yes")) {
             System.out.println("Request accepted. Proceeding to create a contract...");
             createContract(requestDetails);
-        
+    
             requests.remove(index);
-
+    
             updateRequestsFile(requests);
         } else {
             System.out.println("Request declined. Returning to menu.");
         }
     }
+    
 
     private static void updateRequestsFile(List<String[]> requests) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("requests.csv"))) {

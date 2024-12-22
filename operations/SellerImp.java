@@ -1,9 +1,10 @@
-package seller;
+package operations;
 
 import java.io.*;
 import java.util.*;
 
 import models.Property;
+import models.Seller;
 
 public class SellerImp {
 
@@ -182,7 +183,7 @@ public class SellerImp {
                     System.out.println("Description: " + propertyData[2]);
                     System.out.println("Price: $" + propertyData[3]);
                     System.out.println("Location: " + propertyData[4]);
-                    System.out.println("Owner" + propertyData[6]);
+                    System.out.println("Owner: " + propertyData[6]);
                     System.out.println("-----------------------");
                 }
             }

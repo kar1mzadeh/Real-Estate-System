@@ -316,7 +316,6 @@ public class Buyer extends User {
                 bw.write(String.join(",", contract));
                 bw.newLine();
             }
-            System.out.println("Contract status updated to 'bought'.");
         } catch (IOException e) {
             System.out.println("Error updating contracts file: " + e.getMessage());
         }

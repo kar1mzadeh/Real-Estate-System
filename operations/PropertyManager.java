@@ -1,4 +1,4 @@
-package seller;
+package operations;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
