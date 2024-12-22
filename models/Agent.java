@@ -21,7 +21,7 @@ public class Agent extends User {
             // System.out.println("2. Create Contract");
             System.out.println("2. Logout");
             System.out.print("Choose an option: ");
-            String option = scanner.nextLine();
+            String option = scanner.next();
 
             switch (option) {
                 case "1":
@@ -70,7 +70,7 @@ public class Agent extends User {
             }
 
             System.out.print("Select a request to respond to (Enter number) or type 0 to return to the menu: ");
-            int choice = Integer.parseInt(scanner.nextLine());
+            int choice = Integer.parseInt(scanner.next());
 
             if (choice > 0 && choice <= requests.size()) {
                 respondToRequest(requests, choice - 1);
@@ -91,7 +91,7 @@ public class Agent extends User {
         System.out.println("Property ID: " + requestDetails[2]);
 
         System.out.print("\nDo you want to accept this request? (yes/no): ");
-        String decision = scanner.nextLine().toLowerCase();
+        String decision = scanner.next().toLowerCase();
 
         if (decision.equals("yes")) {
             System.out.println("Request accepted. Proceeding to create a contract...");
@@ -148,7 +148,7 @@ public class Agent extends User {
         System.out.println("Date and Time: " + currentDateTime);
 
         System.out.print("Sign (enter \"sign\"): ");
-        String contractDetails = scanner.nextLine();
+        String contractDetails = scanner.next();
 
         // Save contract to a file
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("contracts.csv", true))) {
