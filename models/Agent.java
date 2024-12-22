@@ -89,8 +89,9 @@ public class Agent extends User {
         System.out.println("Request ID: " + requestDetails[0]);
         System.out.println("Buyer: " + requestDetails[1]);
         System.out.println("Property ID: " + requestDetails[2]);
+        System.out.println("Number of installment months: " + requestDetails[3]);
 
-        System.out.print("\nDo you want to accept this request? (yes/no): ");
+        System.out.print("\nDo you want to accept this request and send to seller for confirmation? (yes/no): ");
         String decision = scanner.nextLine().toLowerCase();
 
         if (decision.equals("yes")) {
@@ -137,8 +138,13 @@ public class Agent extends User {
         System.out.println("Description: " + propertyDetails[2]);
         System.out.println("Price: $" + propertyDetails[3]);
         System.out.println("Location: " + propertyDetails[4]);
-        System.out.println("Owner: " + propertyDetails[5]);
+        System.out.println("Owner: " + propertyDetails[6]);
         System.out.println("Buyer: " + buyerUsername);
+
+
+        int contractId = generateContractId(); // Generate a unique contract ID
+        String contractStatus = "pending"; // Initial status is pending
+
 
         // Get the current date and time
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -147,18 +153,39 @@ public class Agent extends User {
         // Display and collect contract details
         System.out.println("Date and Time: " + currentDateTime);
 
-        System.out.print("Sign (enter \"sign\"): ");
-        String contractDetails = scanner.nextLine();
+        // System.out.print("Sign (enter \"sign\"): ");
+        // String contractDetails = scanner.nextLine();
+
+        String contractRecord = contractId + ","+ propertyDetails[1] + ","+  propertyDetails[2] + ","+ propertyDetails[3] + ","+ propertyDetails[4] + ","+  propertyDetails[6] + ","+ buyerUsername + "," + propertyId + "," + contractStatus + "\n";
+
 
         // Save contract to a file
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("contracts.csv", true))) {
-            String contractId = UUID.randomUUID().toString();
-            bw.write(contractId + "," + buyerUsername + "," + propertyId + "," + contractDetails + "\n");
-            System.out.println("Contract created successfully!");
+            // String contractId = UUID.randomUUID().toString();
+            bw.write(contractRecord);
+            System.out.println("Contract created successfully and sent to seller and buyer for sign!");
         } catch (IOException e) {
             System.err.println("Error saving contract: " + e.getMessage());
         }
     }
+
+    // Method to generate a unique contract ID starting from 1
+private static int generateContractId() {
+    int lastContractId = 0; // Default value if no contracts exist
+
+    try (BufferedReader br = new BufferedReader(new FileReader("contracts.csv"))) {
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] contractData = line.split(",");
+            int currentId = Integer.parseInt(contractData[0]); // Assuming the first column is the contract ID
+            lastContractId = Math.max(lastContractId, currentId); // Get the highest ID
+        }
+    } catch (IOException e) {
+        System.err.println("Error reading contracts file: " + e.getMessage());
+    }
+
+    return lastContractId + 1; // Increment the last contract ID by 1
+}
 
     private static String[] getPropertyDetailsById(String propertyId) {
         try (BufferedReader br = new BufferedReader(new FileReader("properties.csv"))) {

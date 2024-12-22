@@ -3,7 +3,6 @@ package seller;
 
 import java.util.Scanner;
 
-import models.Agent;
 import models.User;
 
 public class Seller extends User {
@@ -25,23 +24,23 @@ public class Seller extends User {
         System.out.println("3. Archive Property");
         System.out.println("4. Sign Contract");
         System.out.println("5. Logout");
-        String option = scanner.next();
+        System.out.print("Choose an option: ");
+        String option = scanner.nextLine();
 
 
         switch (option) {
             case "1":
                 SellerImp.createProperty(getUsername());
-                
                 break;
             case "2":
                  SellerImp.editProperty(getUsername()); // called after property selection
                 break;
             case "3":
-SellerImp.archiveProperty(getUsername());
+                SellerImp.archiveProperty(getUsername());
                 break;
                 case "4":
-                Agent.manageContracts();
-                                break;
+                SellerImp.handleContracts(getUsername());
+                break;
             case "5":
                 System.out.println("Logging out...");
                 return;
@@ -52,3 +51,5 @@ SellerImp.archiveProperty(getUsername());
 
    
 }
+
+

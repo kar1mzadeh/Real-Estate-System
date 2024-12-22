@@ -1,17 +1,14 @@
 package seller;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 import models.Property;
 
 public class SellerImp {
 
     static Seller seller = new Seller();  // initiating seller class
+    static Scanner scanner = new Scanner(System.in);
         
      public static void createProperty(String username)
     
@@ -44,6 +41,7 @@ public class SellerImp {
                     PropertyManager.saveProperty(property); // it saves property to file
            
           System.out.println("Property Added Successfully!");
+          
         }
         
     private static int generateUniqueId() {
@@ -111,6 +109,7 @@ public class SellerImp {
             } else {
                 System.out.println("Property Not Found Or Does Not Belong To You.");
             }
+           
         
     }
     
@@ -153,6 +152,7 @@ public class SellerImp {
                 }
             } catch (IOException e) {
                 System.out.println("Error Reading Properties: " + e.getMessage());
+                scanner.close();
                 return;
             }
               if (propertyFound) {
@@ -161,7 +161,9 @@ public class SellerImp {
             } else {
                 System.out.println("Property Not Found Or Does Not Belong To You.");
             }
+            
         }
+
     
     
     
@@ -194,8 +196,100 @@ public class SellerImp {
         }
     }
 
+    public static void handleContracts(String username) {
+        seller.setUsername(username); // Set the seller's username
+
+        // Read the contracts file
+        List<String[]> contracts = readContractsFromFile();
+
+        if (contracts.isEmpty()) {
+            System.out.println("No contracts found.");
+            return;
+        }
+
+        // Display the contracts to the seller
+        System.out.println("\n============== Contracts ===============");
+        int contractCount = 1;
+        for (String[] contract : contracts) {
+            System.out.println(contractCount + ". Contract ID: " + contract[0]);
+            System.out.println("   Type: " + contract[1]);
+            System.out.println("   Description: " + contract[2]);
+            System.out.println("   Price: " + contract[3]);
+            System.out.println("   Location: " + contract[4]);
+            System.out.println("   Owner: " + contract[5]);
+            System.out.println("   Buyer: " + contract[6]);
+            System.out.println("   Status: " + contract[8]);
+            System.out.println("----------------------------------------");
+            contractCount++;
+        }
+
+        // Ask the seller to select a contract
+        System.out.print("Select a contract to respond to (Enter number) or type 0 to return: ");
+        int choice = Integer.parseInt(scanner.nextLine());
+
+        if (choice == 0) {
+            System.out.println("Returning to menu...");
+            return;
+        }
+
+        // Make sure the choice is valid
+        if (choice > 0 && choice <= contracts.size()) {
+            signContract(contracts, choice - 1);
+        } else {
+            System.out.println("Invalid option. Returning to menu.");
+        }
+    }
+
+    private static List<String[]> readContractsFromFile() {
+        List<String[]> contracts = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader("contracts.csv"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] contractData = line.split(",");
+                contracts.add(contractData);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading contracts file: " + e.getMessage());
+        }
+        return contracts;
+    }
+
+    private static void signContract(List<String[]> contracts, int index) {
+        String[] contractDetails = contracts.get(index);
     
-
-
-
+        System.out.println("\nSelected Contract:");
+        System.out.println("Contract ID: " + contractDetails[0]);
+        System.out.println("Type: " + contractDetails[1]);
+        System.out.println("Description: " + contractDetails[2]);
+        System.out.println("Price: " + contractDetails[3]);
+        System.out.println("Location: " + contractDetails[4]);
+        System.out.println("Owner: " + contractDetails[5]);
+        System.out.println("Buyer: " + contractDetails[6]);
+        System.out.println("Status: " + contractDetails[8]);
+        System.out.println("----------------------------------------");
+    
+        System.out.print("\nDo you want to sign this contract? (yes/no): ");
+        String decision = scanner.nextLine().toLowerCase();
+    
+        if (decision.equals("yes")) {
+            contractDetails[8] = "accepted"; // Update status to signed
+            System.out.println("Contract signed. Sent to agent for confirmation.");
+        } else {
+            System.out.println("Contract not signed.");
+        }
+    
+        updateContract(contracts); // Save updated contracts to file
+    }
+    
+    private static void updateContract(List<String[]> contracts) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("contracts.csv"))) {
+            for (String[] contract : contracts) {
+                bw.write(String.join(",", contract));
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error updating contracts file: " + e.getMessage());
+        }
+    }
 }
+    
