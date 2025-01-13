@@ -6,7 +6,8 @@ public class RealEstateApp {
 
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);git add .
+
 
         while (true) {
             System.out.println("===========================================");
@@ -18,7 +19,6 @@ public class RealEstateApp {
             System.out.println("4. Exit");
             System.out.println("\nChoose an Option: ");
             String option = scanner.next();
-
             switch (option) {
                 case "1":
                     LoginSystem.login();
